@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+</head>
+
+<body>
+    <button id="addRow">Add Row</button>
+    <div id="sheet">
+
+
+    </div>
+    <script>
+        var addRow = document.getElementById('addRow');
+
+        (function() {
+
+            var text = '';
+            for (var i = 1; i <= 2; i++) {
+                text += "<div class='row'>";
+                for (var j = 1; j <= 3; j++) {
+                    //createNode();
+                    text += "<input type='text' readOnly/>";
+                }
+
+                text += "<br>";
+                text += "</div>";
+            }
+            sheet.innerHTML = text;
+        })();
+
+        addRow.addEventListener('click', function() {
+            var rows = document.querySelectorAll('.row');
+            var dupNode = rows[0].cloneNode(true);
+            sheet.appendChild(dupNode);
+        }, false);
+
+
+        document.querySelector('#sheet').addEventListener('click', function(e) {
+            var target = e.target;
+            if (target.tagName == 'INPUT') {
+                alert("clicked");
+            }
+        }, false);
+    </script>
+</body>
+
+</html>

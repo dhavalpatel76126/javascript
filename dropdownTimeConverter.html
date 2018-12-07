@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+                background-color: olivedrab;
+            }
+
+        p {
+                color: white;
+        }
+        select{
+                width: 150px;
+                height: 20px;
+                font-size: 15;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <select id="temperature">
+            <option value="f">celsius to ferhenhit</option>
+            <option value="c">second to minute </option>
+            <option value="k">gram to kg</option>
+        </select><br><br>
+        <input type="text" id="fconvert" onkeyup="myFunction()">
+        <input type="text" id="cconvert" onkeyup="myFunction2()">
+    </form>
+    <span id="demo"></span></p>
+    <div id="temp">
+    </div>
+    <script>
+        function myFunction() {
+            if (document.getElementById("temperature").value == "f") {
+                convertF();
+
+            } else if (document.getElementById("temperature").value == "c") {
+                convertC();
+
+            } else if (document.getElementById("temperature").value == "k") {
+                convertK();
+            }
+        }
+        function myFunction2() {
+            if (document.getElementById("temperature").value == "f") {
+                convertF1();
+
+            } else if (document.getElementById("temperature").value == "c") {
+                convertC1();
+
+            } else if (document.getElementById("temperature").value == "k") {
+                convertK1();
+            }
+        }
+        //visaversa1
+        function convertF() {
+            var x = document.getElementById("fconvert").value;
+            var convertF = (x * 1.8) + 32;
+            document.getElementById("cconvert").value = convertF;
+        }
+
+        function convertC() {
+            var x = document.getElementById("fconvert").value;
+            var convertC = x / 60;
+            document.getElementById("cconvert").value = convertC;
+        }
+
+        function convertK() {
+            var x = document.getElementById("fconvert").value;
+            var convertK = x / 1000;
+            document.getElementById("cconvert").value = convertK;
+        }
+        //visaversa2
+        function convertF1() {
+            var x = document.getElementById("cconvert").value;
+            var convertF = (x / 1.8) - 32;
+            document.getElementById("fconvert").value = convertF;
+        }
+
+        function convertC1() {
+            var x = document.getElementById("cconvert").value;
+            var convertC = x * 60;
+            document.getElementById("fconvert").value = convertC;
+        }
+
+        function convertK1() {
+            var x = document.getElementById("cconvert").value;
+            var convertK = x * 1000;
+            document.getElementById("fconvert").value = convertK;
+        }
+    </script>
+</body>
+</html>
