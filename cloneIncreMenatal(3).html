@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="clone">
+
+        <button onclick="btnplusclick(this)" name="plusbtn" class="btnplus" style="width: 70px;height:30px">+</button>
+
+        <input type="number" class="txtcounter" style="width: 100px " value="0" required>
+
+        <button onclick="btnminusclick(this)" class="btnminus" style="width: 70px;height:30px">-</button>
+    </div>
+    <button onclick="clone()" style="width:50px;height:50px">Add</button>
+    <div id="divmain">
+        From here we will add Clones
+    </div>
+    <script>
+        var myClondedCount = 1;
+
+        function btnplusclick(myplusbtn) {
+            parentElement=myplusbtn.parentElement
+            console.log(parentElement.querySelector('.txtcounter').value++);
+            
+
+
+        }
+
+        function btnminusclick(myminusbtn) {
+            parentElement=myminusbtn.parentElement
+            console.log(parentElement.querySelector('.txtcounter').value--);
+
+        }
+
+        function clone() {
+            var elmnt = document.getElementById("clone");
+            var cln = elmnt.cloneNode(true);
+            cln.id = "clone" + myClondedCount;
+
+            document.getElementById("divmain").appendChild(cln);
+            myClondedCount++;
+            console.log(`button ${cln.id}  has been addeed`)
+        }
+    </script>
+</body>
+
+</html>
