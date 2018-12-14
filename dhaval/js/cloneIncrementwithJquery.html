@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+
+<div id="clone">
+        <button onclick="myFunction()" id="but1" style="width: 50px;height:50px">+</button>
+        <input type="number" style="width: 50px " id="myNumber">
+        <button onclick="myFunction1()" id="but2" style="width: 50px;height:50px">-</button>
+</div>
+
+<button id="button1">Copy the first p element (including event handlers), and append to body element</button>
+
+<script>
+        function myFunction() {
+            var increment=document.getElementById("myNumber").stepUp(1);
+        }
+        function myFunction1() {
+            var decrement=document.getElementById("myNumber").stepDown(1);
+            
+        }
+        function clone() {
+            var elmnt = document.getElementsByTagName("DIV")[0];
+            var elmnt1 = document.getElementById("but1");
+            var elmnt2 = document.getElementById("but2");
+            var elmnt3 = document.getElementById("myNumber");
+            var cln = elmnt.cloneNode(true);
+            console.log(cln)
+            document.body.appendChild(cln);
+
+         }
+
+        </script>
+</body>
+</html>

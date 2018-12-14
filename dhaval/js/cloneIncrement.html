@@ -1,0 +1,49 @@
+<html>
+<body>
+    <div id="clone">
+        <button onclick="btnplusclick(this)" style="width: 70px;height:30px">+</button>
+        <input type="number" style="width: 100px " value="0">
+        <button onclick="btnminusclick(this)" style="width: 70px;height:30px">-</button>
+    </div>
+    <button onclick="clone()" style="width:50px;height:50px">Add</button>
+    <div id="divmain">
+        From here we will add Clones
+    </div>
+    <script>
+        var myClondedCount = 1;
+
+        function btnplusclick(myplusbtn) {
+            //myplusbtn.parent
+            //cln.chilren[]
+            var counter = myplusbtn.id.split("btnplus")[1];
+            console.log("myplusbtn.id.split('btnplus') = ", myplusbtn.id.split("btnplus"));
+            console.log("myplusbtn" + counter);
+            var myInput = document.getElementById("lbl" + counter);
+            myInput.stepUp(1);
+        }
+
+        function btnminusclick(myminusbtn) {
+            var counter = myminusbtn.id.split("btnminus")[1];
+            console.log("myminusbtn" + counter);
+            console.log(counter);
+            var myInput = document.getElementById("lbl" + counter);
+            myInput.stepDown(1);
+        }
+
+        function clone() {
+            var elmnt = document.getElementById("clone");
+            var cln = elmnt.cloneNode(true);
+            cln.id = "clone" + myClondedCount;
+            var btnPlus = cln.children[0];
+            btnPlus.id = "btnplus" + myClondedCount;
+            var inputLable = cln.children[1];
+            inputLable.id = "lbl" + myClondedCount;
+            var btnMinus = cln.children[2];
+            btnMinus.id = "btnminus" + myClondedCount;
+            document.getElementById("divmain").appendChild(cln);
+            myClondedCount++;
+            console.log(`button ${cln.id}  has been addeed`)
+        }
+    </script>
+</body>
+</html>

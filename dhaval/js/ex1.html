@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#button").click(function(){
+        $("body").append($("div:first").clone(true));
+    });
+    $("#adds").click(function(){
+		var a=$("#numberofroom").val();
+        a++;
+    	if (a => 1) {
+        	$("#subs").prop("disabled", false);
+    		}
+    		$("#numberofroom").val(a);
+        
+    });
+	
+    $('#subs').click(function subst() {
+    var b = $("#numberofroom").val();
+    if (b.length > 0 && b >= 1) {
+        b--;
+        $("#numberofroom").val(b);
+    }
+    else {
+        $("#subs").prop("disabled", true);
+    }
+});
+});
+</script>
+</head>
+<body>
+
+<div>
+<button id="adds">+</button>
+<input id="numberofroom" value="2"/>
+<button id="subs">-</button>
+</div>
+
+
+<button id="button">Copy the first p element (including event handlers), and append to body element</button>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> javascript Clone </title>
+    <style>
+        .hide {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+    <div id="clone">
+        <button onclick="btnplusclick(this)" style="width: 70px;height:30px">+</button>
+        <input type="number" style="width: 100px " value="0" id=(`${this.id}`)>
+        <button onclick="btnminusclick(this)" style="width: 70px;height:30px">-</button>
+    </div>
+    <button onclick="clone()" style="width:50px;height:50px">Add</button>
+
+    <div id="divmain">
+        From here we will add Clones
+    </div>
+    <script>
+        (function () {
+
+            function clone() {
+                var elmnt = document.getElementById("clone");
+
+                var cln = elmnt.cloneNode(true);
+
+
+                document.getElementById("divmain").appendChild(cln);
+
+
+            }
+
+
+        });
+
+        function ready(fn) {
+            if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+
+            } else {
+                document.addEventListener('DOMContentLoaded', fn);
+            }
+        }
+    </script>
