@@ -10,20 +10,13 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body>
-<?php
 
 
-$limit=$_GET['limit'];
+$limit = 10;
+if (isset($_GET['limit'])) {
+    $limit = $_GET["limit"];
+    echo "limit number===>" . $limit . "<br>";
+}
 $pn = 1;
 if (isset($_GET["page"])) {
     $pn = $_GET["page"];
@@ -32,74 +25,105 @@ if (isset($_GET["page"])) {
 
 $start_from = ($pn - 1) * $limit;
 echo "start from ==>" . $start_from . "<br>";
-$sql = "SELECT * FROM user LIMIT $start_from, $limit";
+
+$sortBy = "id";
+if (isset($_GET["sortBy"])) {
+    $sortBy = $_GET["sortBy"];
+    echo "sortBy ===>" . $sortBy . "<br>";
+}
+$sortType = "ASC";
+if (isset($_GET["sortType"])) {
+    $sortType = $_GET["sortType"];
+    echo "sortType ===>" . $sortType . "<br>";
+}
+$sql = "SELECT * FROM user ORDER BY $sortBy $sortType  LIMIT $start_from, $limit";
 echo $sql;
 $rs_result = mysqli_query($conn, $sql);
-
 $totalPage = "SELECT COUNT(*) FROM user";
 $rs_result1 = mysqli_query($conn, $totalPage);
 $row1 = mysqli_fetch_row($rs_result1);
 $total_records1 = $row1[0];
 $total_pages1 = ceil($total_records1 / $limit);
-
-
-
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<script type="text/javascript">
+		function onLimitChange(mylimitsel) {
+			// alert();
+			//window.location.href = "?page=8&limit=8&sortBy=id&sortType=ASC";
+			window.location.href = '?page=<?=$pn?>&limit='+mylimitsel.value+'&sortBy=<?=$sortBy?>&sortType=<?=$sortType?>';
+			//console.log(window.location.href);
+	}
+
+	</script>
+</head>
+<body>
+
 <div class="container">
 	<br>
 	<div>
 
 	<div class="form-group col-sm-2">
   <label for="sel1">Select list:</label>
-  <form method=get action=index.php>
-	
-  <select class="form-control" id="sel1" name="limit" onchange="handleSelect(this)" >
-      <?php for ($k = 5; $k <= 10; $k++) {?>
-  
-	   <?php 
-	   if($k>=5){ 
-		   ?>
-		    <option selected>
-			
-	   <?php 
-	  echo $k;
-	}
-	   else{
+  <select class="form-control" id="sel1" name="limit" onchange="onLimitChange(this)">
+	  <?php 
+	  for ($k = 2; $k <= 10; $k++) {
+		  $selected = "";
+		  if($limit == $k) {
+			$selected = "selected";
+		  }
+	  ?>
 		
-	   }
-	  
-	   ?>
-	   
-	</option>
+   <option <?=$selected?>><?=$k?></option>
       <?php
 }?>
-	 <script type="text/javascript">
-	//  var page = <?=$pn?>;
-function handleSelect(elm)
-{
 
-//window.location = 'index.php?limit='+"<?php $k?>";
-//console.log(page);
-}
-</script>
   </select>
-  <input type=submit value=GO>
+
+
 </div>
-	<table class="table table-striped table-condensed table-bordered">
+<input type="text" name="query" id="myInput" onkeyup="myFunction()"/>
+	
+	<script>
+/*$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+	console.log(value);
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+*/
+function myFunction(){
+document.getElementById("myInput").value;
+}
+
+</script>
+	<table class="table table-striped table-condensed table-bordered" id="tableData">
+
 		<thead>
 		<tr>
-		<th width="10%">id</th>
-		<th>Name</th>
-		<th>mail</th>
-        <th>contact</th>
-        <th>technology</th>
-        <th>experience</th>
+		<th><a href="index.php?sortBy=id&sortType=<?php if($_GET["sortBy"] == "id" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">ID</th>
+		<th><a href="index.php?sortBy=name&sortType=<?php if($_GET["sortBy"] == "name" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">NAME</th>
+		<th><a href="index.php?sortBy=mail&sortType=<?php if($_GET["sortBy"] == "mail" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">MAIL</th>
+		<th><a href="index.php?sortBy=contact&sortType=<?php if($_GET["sortBy"] == "contact" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">CONTACT</th>
+		<th><a href="index.php?sortBy=technology&sortType=<?php if($_GET["sortBy"] == "technology" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">technology</th>
+		<th><a href="index.php?sortBy=experience&sortType=<?php if($_GET["sortBy"] == "experience" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">experience</th>
 		</tr>
 		</thead>
-		<tbody>
+		<tbody id="myTable">
+		
+
 		<?php
 while ($row = mysqli_fetch_array($rs_result)) {
-	$limit = 10;
+
     ?>
 		<tr>
 		<td><?=$row['id']?></td>
@@ -126,10 +150,11 @@ $total_pages = ceil($total_records / $limit);
 $pagLink = "";
 for ($i = 1; $i <= $total_pages; $i++) {
     ?>
-    <li><a href='index.php?page=<?=$i?>&limit=<?=$limit?>'><?=$i?></a></li>
+    <li><a href='index.php?page=<?=$i?>&limit=<?=$limit?>&sortBy=<?=$sortBy?>&sortType=<?=$sortType?>'><?=$i?></a></li>
 <?php
 
-};
+}
+;
 ?>
 	</ul>
 	</div>
