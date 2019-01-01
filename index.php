@@ -35,27 +35,25 @@ if (isset($_GET["sortType"])) {
     echo "sortType ===>" . $sortType . "<br>";
 }
 
-$search="";
+$search = "";
 $qrySearch = "";
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
-	echo "search ===>" . $search . "<br>";
-	
-	$qrySearch = "WHERE 
-	`id` LIKE '%".$search."%'  OR 
-	`name` LIKE '%".$search."%' OR 
-	`mail` LIKE '%".$search."%' OR 
-	`contact` LIKE '%".$search."%' OR 
-	`technology` LIKE '%".$search."%' OR 
-	`experience` LIKE '%".$search."%'";
+    echo "search ===>" . $search . "<br>";
 
+    $qrySearch = "WHERE
+	`id` LIKE '%" . $search . "%'  OR
+	`name` LIKE '%" . $search . "%' OR
+	`mail` LIKE '%" . $search . "%' OR
+	`contact` LIKE '%" . $search . "%' OR
+	`technology` LIKE '%" . $search . "%' OR
+	`experience` LIKE '%" . $search . "%'";
 
-	/*$qrySearch = "WHERE 
-	`name` LIKE '%vls%' OR `mail` LIKE '%v@gmail.com%'";*/
+    /*$qrySearch = "WHERE
+`name` LIKE '%vls%' OR `mail` LIKE '%v@gmail.com%'";*/
 }
 
-
-$sql = "SELECT * FROM user $qrySearch 
+$sql = "SELECT * FROM user $qrySearch
 ORDER BY $sortBy $sortType  LIMIT $start_from, $limit";
 
 echo $sql;
@@ -69,21 +67,44 @@ $total_pages1 = ceil($total_records1 / $limit);
 <!DOCTYPE html>
 <html>
 <head>
+
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	
+<script type="text/javascript">
+	
+	var pages='<?=$pn?>';
 
-	<script type="text/javascript">
-		function onLimitChange(mylimitsel) {
+	var sortb='<?=$sortBy?>';
+	var sorttpe='<?=$sortType?>';
+	var searchpage='<?=$search?>';
+	var limit='<?=$limit?>';
+
+	function hreffunction()
+	{
+		window.location.href='?page='+pages+'&limit='+limit+'&sortBy='+sortb+'&sortType=+'sorttpe'+&search='+searchpage+'';
+		
+	}
+	
+
+	function onLimitChange(mylimitsel) {
 			// alert();
 			//window.location.href = "?page=8&limit=8&sortBy=id&sortType=ASC";
-		window.location.href = '?page=<?=$pn?>&limit='+mylimitsel.value+'&sortBy=<?=$sortBy?>&sortType=<?=$sortType?>';
+		window.location.href = '?page=<?=$pn?>&search=<?=$search?>&limit='+mylimitsel.value+'&sortBy=<?=$sortBy?>&sortType=<?=$sortType?>';
 			//console.log(window.location.href);
 	}
+	function searchelement(){
+	//var  = document.getElementById("search").value;
+	//console.log(searchelememnt);
+	//window.location.href='?page=<?=$pn?>&limit=<?=$limit?>&sortBy=<?=$sortBy?>&sortType=<?=$sortType?>&search='+searchelememnt+'';
+	//hreffunction();
+	alert("s");
+	} 
+</script>
 
-	</script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -94,54 +115,83 @@ $total_pages1 = ceil($total_records1 / $limit);
 	<div class="form-group col-sm-2">
   <label for="sel1">Select list:</label>
   <select class="form-control" id="sel1" name="limit" onchange="onLimitChange(this)">
-	  <?php 
-	  for ($k = 2; $k <= 10; $k++) {
-		  $selected = "";
-		  if($limit == $k) {
-			$selected = "selected";
-		  }
-	  ?>
-		
+	  <?php
+for ($k = 2; $k <= 10; $k++) {
+    $selected = "";
+    if ($limit == $k) {
+        $selected = "selected";
+    }
+    ?>
+
    <option <?=$selected?>><?=$k?></option>
       <?php
 }?>
 
   </select>
-
-
 </div>
-<form action="index.php" method="GET">
-    <input type="text" name="search" />
-    <input type="submit" value="Search" />
-</form>
-<!--<input type="text" name="search" id="myInput" />
-<input type="submit" onclick="searchFunction(this)">
-<script type="text/javascript">
-function searchFunction(searchValue)
-{
-//alert("dd");
-var href1=window.location.href='?page=<?=$pn?>&sortBy=<?=$sortBy?>&search='+searchValue.value+'';
-//var href1=window.location.href='?search=<?=$search?>';
-console.log(href1);
-}
-</script>-->
+
+<input type="text" name="search" <?php if ($search == "") {?>value=""<?} else {?>value=<?php echo $search;} ?> id="search" />
+    <input type="submit" value="Search" onclick="searchelement()"/>
+
 
 	<table class="table table-striped table-condensed table-bordered" id="tableData">
 
 		<thead>
 		<tr>
-		<th><a href="index.php?sortBy=id&sortType=<?php if($_GET["sortBy"] == "id" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">ID</th>
-		<th><a href="index.php?sortBy=name&sortType=<?php if($_GET["sortBy"] == "name" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">NAME</th>
-		<th><a href="index.php?sortBy=mail&sortType=<?php if($_GET["sortBy"] == "mail" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">MAIL</th>
-		<th><a href="index.php?sortBy=contact&sortType=<?php if($_GET["sortBy"] == "contact" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">CONTACT</th>
-		<th><a href="index.php?sortBy=technology&sortType=<?php if($_GET["sortBy"] == "technology" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">technology</th>
-		<th><a href="index.php?sortBy=experience&sortType=<?php if($_GET["sortBy"] == "experience" && $_GET["sortType"] == "ASC"){echo "DESC";}	else{ echo "ASC";}?>">experience</th>
+		<th><a href="index.php?
+		limit=<?php echo $limit ?>
+		&page=<?php echo $pn ?>&search=<?=$search?>&sortBy=id&sortType=<?php if ($_GET["sortBy"] == "id" && $_GET["sortType"] == "ASC") {echo "DESC";?>
+
+
+		<?} else {?>
+
+		<?echo "ASC";} ?>">
+
+		ID <?php if ($sortType == "ASC" && $sortBy == "id") {?>
+			<i class='fa fa-arrow-up'>
+			<?php } else if ($sortType == "DESC" && $sortBy == "id") {?>
+			<i class='fa fa-arrow-down'>
+			<?php }?></a></th>
+
+		<th><a href="index.php?limit=<?=$limit?>&page=<?=$pn?>&search=<?=$search?>&sortBy=name&sortType=<?php if ($_GET["sortBy"] == "name" && $_GET["sortType"] == "ASC") {echo "DESC";} else {echo "ASC";}?>">NAME
+		<?php if ($sortType == "ASC" && $sortBy == "name") {?>
+			<i class='fa fa-arrow-up'>
+			<?php } else if ($sortType == "DESC" && $sortBy == "name") {?>
+			<i class='fa fa-arrow-down'>
+			<?php }?></a></th>
+
+		<th><a href="index.php?limit=<?=$limit?>&page=<?=$pn?>&search=<?=$search?>&sortBy=mail&sortType=<?php if ($_GET["sortBy"] == "mail" && $_GET["sortType"] == "ASC") {echo "DESC";} else {echo "ASC";}?>">MAIL
+		<?php if ($sortType == "ASC" && $sortBy == "mail") {?>
+			<i class='fa fa-arrow-up'>
+			<?php } else if ($sortType == "DESC" && $sortBy == "mail") {?>
+			<i class='fa fa-arrow-down'>
+			<?php }?></a></th>
+
+		<th><a href="index.php?limit=<?=$limit?>&page=<?=$pn?>&search=<?=$search?>&sortBy=contact&sortType=<?php if ($_GET["sortBy"] == "contact" && $_GET["sortType"] == "ASC") {echo "DESC";} else {echo "ASC";}?>">CONTACT
+		<?php if ($sortType == "ASC" && $sortBy == "contact") {?>
+			<i class='fa fa-arrow-up'>
+			<?php } else if ($sortType == "DESC" && $sortBy == "contact") {?>
+			<i class='fa fa-arrow-down'>
+			<?php }?></a></th>
+
+		<th><a href="index.php?limit=<?=$limit?>&page=<?=$pn?>&search=<?=$search?>&sortBy=technology&sortType=<?php if ($_GET["sortBy"] == "technology" && $_GET["sortType"] == "ASC") {echo "DESC";} else {echo "ASC";}?>">technology
+		<?php if ($sortType == "ASC" && $sortBy == "technology") {?>
+			<i class='fa fa-arrow-up'>
+			<?php } else if ($sortType == "DESC" && $sortBy == "technology") {?>
+			<i class='fa fa-arrow-down'>
+			<?php }?></a></th>
+		<th><a href="index.php?limit=<?=$limit?>&page=<?=$pn?>&search=<?=$search?>&sortBy=experience&sortType=<?php if ($_GET["sortBy"] == "experience" && $_GET["sortType"] == "ASC") {echo "DESC";} else {echo "ASC";}?>">experience
+		<?php if ($sortType == "ASC" && $sortBy == "experience") {?>
+			<i class='fa fa-arrow-up'>
+			<?php } else if ($sortType == "DESC" && $sortBy == "id") {?>
+			<i class='fa fa-arrow-down'>
+			<?php }?></a></th>
 		</tr>
 		</thead>
 		<tbody id="myTable">
 		<?php
-		while ($row = mysqli_fetch_array($rs_result)) {
-		?>
+while ($row = mysqli_fetch_array($rs_result)) {
+    ?>
 		<tr>
 		<td><?=$row['id']?></td>
 		<td><?=$row['name']?></td>
@@ -151,26 +201,28 @@ console.log(href1);
         <td><?=$row['experience']?></td>
 		</tr>
 		<?php
-};
+}
+;
 ?>
 	</tbody>
 	</table>
 	<ul class="pagination">
 	<?php
-$sql = "SELECT COUNT(*) FROM user";
+$sql = "SELECT COUNT(*) FROM user $qrySearch";
 $rs_result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_row($rs_result);
 $total_records = $row[0];
-echo $total_records;
+echo "total record" . $total_records . "<br>";
+
 $total_pages = ceil($total_records / $limit);
+echo "total page" . $total_pages;
 $pagLink = "";
 for ($i = 1; $i <= $total_pages; $i++) {
     ?>
-    <li><a href='index.php?page=<?=$i?>&limit=<?=$limit?>&sortBy=<?=$sortBy?>&sortType=<?=$sortType?>'><?=$i?></a></li>
+    <li><a href='index.php?search=<?=$search?>&page=<?=$i?>&limit=<?=$limit?>&sortBy=<?=$sortBy?>&sortType=<?=$sortType?>'><?=$i?></a></li>
 <?php
 
-}
-;
+};
 ?>
 	</ul>
 	</div>
