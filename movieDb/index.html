@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>movie db App</title>
+  
+  <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+  <div class="item poster card">
+    <div class="image_content">
+      <a id="movie_297802" class="result" href="/movie/297802" title="Aquaman" alt="Aquaman">
+          
+    
+      <img class="poster lazyload fade" data-sizes="auto" data-src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/5Kg76ldv7VxeX9YlcQXiowHgdX6.jpg" data-srcset="https://image.tmdb.org/t/p/w185_and_h278_bestv2/5Kg76ldv7VxeX9YlcQXiowHgdX6.jpg 1x, https://image.tmdb.org/t/p/w370_and_h556_bestv2/5Kg76ldv7VxeX9YlcQXiowHgdX6.jpg 2x" alt="Aquaman">
+    
+  
+
+        <div class="meta">
+          <span id="popularity_5440274e0e0a260269000626_value" class="hide popularity_rank_value">
+            <div class="tooltip_popup popularity">
+              <h3>Popularity Rank</h3>
+              <p><span>Today:</span> 1</p>
+              <p><span>Last Week:</span> 1</p>
+            </div>
+          </span>
+          <span id="popularity_5440274e0e0a260269000626" class="glyphicons glyphicons-cardio x1 popularity_rank"></span>
+          <span class="right">
+            
+              <span id="favourite_5440274e0e0a260269000626" class="glyphicons glyphicons-heart x1 favourite list_action" data-media-type="movie"></span>
+              <span id="watchlist_5440274e0e0a260269000626" class="glyphicons glyphicons-bookmark x1 watchlist list_action" data-media-type="movie"></span>
+            
+          </span>
+        </div>
+      </a>
+    </div>
+    <div class="info">
+      <div class="wrapper">
+        <div class="consensus tight">
+          <div class="outer_ring">
+            <div class="user_score_chart 5440274e0e0a260269000626" data-percent="69.0" data-track-color="#423d0f" data-bar-color="#d2d531">
+              <div class="percent">
+                
+                  <span class="icon icon-r69"></span>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex">
+          <a id="movie_297802" class="title result" href="/movie/297802" title="Aquaman" alt="Aquaman">Aquaman</a>
+          <span>December 21, 2018</span>
+        </div>
+      </div>
+      <p class="overview">Arthur Curry learns that he is the heir to the underwater kingdom of Atlantis, and must step forward to lead his people and be a hero to the world.</p>
+      <p class="view_more"><a id="movie_297802" class="result" href="/movie/297802" title="Aquaman" alt="Aquaman">More Info</a></p>
+    </div>
+    <script>
+      $(function() {
+        $('.user_score_chart.5440274e0e0a260269000626').easyPieChart({
+          lineCap: 'round',
+          lineWidth: 3,
+          scaleColor: false,
+          size: 32,
+          animate: {
+            enabled: false
+          }
+        });
+      });
+    </script>
+  </div>
+
+  <script src="scripts.js"></script>
+  <button id="lodemore">lode more</button>
+</body>
+
+</html>
