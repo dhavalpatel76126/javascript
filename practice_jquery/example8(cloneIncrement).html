@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <input type="text" name="qty" class="qty" maxlength="12" value="0" class="input-text qty" />
+        <div class="button-container">
+            <button class="cart-qty-plus" type="button" value="+">+</button>
+            <button class="cart-qty-minus" type="button" value="-">-</button>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            var buttonPlus = $(".cart-qty-plus");
+            var buttonMinus = $(".cart-qty-minus");
+
+            var incrementPlus = buttonPlus.click(function () {
+                var $n = $(this)
+                    .parent(".button-container")
+                    .parent(".container")
+                    .find(".qty");
+                $n.val(Number($n.val()) + 1);
+            });
+
+            var incrementMinus = buttonMinus.click(function () {
+                var $n = $(this)
+                    .parent(".button-container")
+                    .parent(".container")
+                    .find(".qty");
+                $n.val(Number($n.val()) - 1);
+            });
+        });
+    </script>
+</body>
+</html>

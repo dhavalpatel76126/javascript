@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Popular Movies &#8212; The Movie Database (TMDb)</title>
+    <link rel="stylesheet" href="style2.css">
+    <style>
+        .overview {
+            overflow: hidden;
+            max-width: 75ch;
+        }
+    </style>
+</head>
+
+<body class="en v4">
+    <div class="page_wrap movie_wrap">
+        <main id="main" class="">
+            <div class="media">
+                <h2 class="title">Popular Movies</h2>
+                <div class="clear"></div>
+                <div class="results flex results_poster_card" id="myresultdiv">
+                </div>
+                <button onclick="lodemore()" style="width:100px;height:100px;background:red;font-size:20px;">Lode More</button>
+            </div>
+
+        </main>
+    </div>
+    <div style="display:none">
+        <div class="myclonediv item poster card" id="myclonediv">
+            <div class="image_content">
+                <a id="movie_297802" class="result" title="Aquaman" alt="Aquaman">
+                    <img class="movieposter" src="" alt="Aquaman" id="image">
+                </a>
+            </div>
+            <div class="info">
+                <div class="wrapper">
+                    <div class="consensus tight">
+                        <div class="outer_ring">
+                            <div class="user_score_chart 5440274e0e0a260269000626" data-percent="69.0" data-track-color="#423d0f"
+                                data-bar-color="#d2d531">
+                                <div class="percent">
+                                    <span class="icon icon-r69"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <a class="title result movieName" title="Aquaman" alt="Aquaman">Aquaman</a>
+                        <span class="releaseDate">December 21, 2018</span>
+                    </div>
+                </div>
+                <p class="overview" limit="100">Arthur Curry learns that he is the heir to the underwater kingdom of
+                    Atlantis, and must step forward to lead his people and be a hero to the world.</p>
+                <p class="view_more"><a title="" class="viewMore" alt="">More Info</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="scripts2.js"></script>
+    <script>
+        var pg = 2;
+
+        function lodemore() {
+            var myresultdiv = document.getElementById("myresultdiv");
+            var request = new XMLHttpRequest();
+            request.open('GET', 'https://api.themoviedb.org/3/movie/popular?page=' + pg +
+                '&language=en-US&api_key=2858f484f1d0a7fc44f73045315bfc02', true);
+            request.onload = function () {
+                path = "http://image.tmdb.org/t/p/w200//";
+                var data = JSON.parse(this.response);
+
+
+                if (request.status >= 200 && request.status < 400) {
+                    for (let index = 0; index < data.results.length; index++) {
+                        var element = data.results[index];
+                        path1 = "http://image.tmdb.org/t/p/w200//" + element.poster_path;
+                        var cln = document.getElementById("myclonediv").cloneNode(true);
+                        cln.id = myclonediv.id + index;
+                        var movieName = cln.querySelector(".movieName");
+                        var moviePoster = cln.querySelector(".movieposter");
+                        var movieOverview = cln.querySelector(".overview");
+                        var movieDate = cln.querySelector(".releaseDate");
+                        var view_more = cln.querySelector(".viewMore");
+                        view_more.alt = movieName;
+                        moviePoster.src = path1;
+                        movieName.innerHTML = element.original_title;
+                        movieOverview.innerHTML = element.overview;
+                        movieDate.innerHTML = element.release_date;
+                        myresultdiv.appendChild(cln);
+                    }
+
+                }
+
+
+            }   
+            pg++;
+            request.send();
+
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> jQuery Clone </title>
+    <style>
+        .hide {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+    <div class="repeat-me">
+        <button class="increase">+</button>
+        <input class="value" type="number" value="0">
+        <button class="decrease">-</button>
+    </div>
+    <div class="repeat-row">
+        <button class="clone-row">Add Row</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.clone-row', function () {
+                var clonned_row = $('.repeat-me').clone(true).appendTo('body');
+                clonned_row.insertBefore('.repeat-row');
+                clonned_row.removeClass('repeat-me');
+
+            });
+            $(document).on('click', '.increase', function () {
+                var current_val = parseInt($(this).siblings('input').val());
+                if (current_val != null) {
+                    $(this).siblings('input').val(current_val + 1);
+                }
+            });
+            $(document).on('click', '.decrease', function () {
+                var current_val = parseInt($(this).siblings('input').val());
+                if (current_val != null) {
+                    $(this).siblings('input').val(current_val - 1);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

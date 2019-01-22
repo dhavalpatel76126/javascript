@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        body {
+                background-color:orangered;
+            }
+        p {
+                color: white;
+        }
+        select{
+                width: 250px;
+                height: 40px;
+                font-size: 20;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <select id="temperature">
+            <option value="f">celsius to ferhenhit</option>
+            <option value="c">second to minute </option>
+            <option value="k">gram to kg</option>
+        </select><br><br>
+        <input type="text" id="fconvert">
+        <input type="text" id="cconvert">
+    </form>
+    <span id="demo"></span></p>
+    <div id="temp">
+    </div>
+    <script>
+        $("#fconvert").keyup(function () {
+            if ($("#temperature").val() == "f") {
+                convertF();
+            } else if ($("#temperature").val() == "c") {
+                convertC();
+            } else if ($("#temperature").val() == "k") {
+                convertK();
+            }
+        });
+        $("#cconvert").keyup(function () {
+            if ($("#temperature").val() == "f") {
+                convertF1();
+            } else if ($("#temperature").val() == "c") {
+                convertC1();
+            } else if ($("#temperature").val() == "k") {
+                convertK1();
+            }
+        });
+
+        //visaversa1
+        function convertF() {
+            var x = $("#fconvert").val();
+            var convertF = (x * 1.8) + 32;
+            $("#cconvert").val(convertF);
+        }
+
+        function convertC() {
+            var x = $("#fconvert").val();
+            var convertC = x / 60;
+            $("#cconvert").val(convertC);
+        }
+
+        function convertK() {
+            var x = $("#fconvert").val();
+            var convertK = x / 1000;
+            $("#cconvert").val(convertC);
+        }
+        //visaversa2
+        function convertF1() {
+            var x = $("#cconvert").val();
+            var convertF = (x / 1.8) - 32;
+            $("#fconvert").val(convertF);
+        }
+
+        function convertC1() {
+            var x = $("#cconvert").val();
+            var convertC = x * 60;
+            $("#fconvert").val(convertC);
+        }
+
+        function convertK1() {
+            var x = $("#cconvert").val();
+            var convertK = x * 1000;
+            $("#fconvert").val(convertK);
+        }
+    </script>
+</body>
+
+</html>
